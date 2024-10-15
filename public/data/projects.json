@@ -1,0 +1,28 @@
+[
+    {
+      "projectname": "Office Management System",
+      "shortname": "OMS",
+      "description": "A comprehensive office management system that streamlines daily operations, manages employee data, and automates administrative tasks.",
+      "technologies": ["React, ", "Tailwind CSS, ", "Node.js, ", "PostgreSQL"],
+      "imageurl": "./images/project.png",
+      "preview_link": ""
+    },
+
+    {
+      "projectname": "Bill Management System",
+      "shortname": "BMS",
+      "description": "An application to automate the process of billing and managing subscriptions for Dish TV services, providing both customers and operators a seamless experience.",
+      "technologies": ["React, ", "Tailwind CSS, ", "Node.js, ", "PostgreSQL"],
+      "imageurl": "",
+      "preview_link": "https://example.com/dish-tv-bill-demo"
+    },
+    {
+      "projectname": "Top Sheet Generator",
+      "shortname": "Top Sheet",
+      "description": "A Web Application for polytechnic stundets to help them about their projects report. Any can make a Project Top sheet in a selected format using his information using this app.",
+      "technologies": ["HTML, ", "CSS, ", "JavaScript, "],
+      "imageurl": "",
+      "preview_link": "https://example.com/wordpress-portfolio-demo"
+    }
+  ]
+  

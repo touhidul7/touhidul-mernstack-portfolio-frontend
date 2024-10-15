@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import 'flowbite';
+
+:root{
+    background-color: rgb(17 24 39);
+    font-family: "Montserrat", sans-serif;
+}
+.home{
+    color: #d1d5db;
+}

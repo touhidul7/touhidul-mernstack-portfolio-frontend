@@ -1,0 +1,23 @@
+[
+  {
+    "role": "Front-End Web Developer",
+    "company": "Fiverr",
+    "location": "Remote",
+    "years": "2022-Present",
+    "description": "As a freelancer on Fiverr, I specialize in front-end web development using React and Tailwind CSS. I have completed projects involving HTML template design, WordPress sites, and converting designs into responsive, functional websites."
+  },
+  {
+    "role": "Front-End Web Developer",
+    "company": "Inspired It",
+    "location": "Rangpur, Bangladesh",
+    "years": "2024-Present",
+    "description": "At Inspired It, I work on management software like Office and School Management Systems. My role includes creating user-friendly interfaces and collaborating with backend developers to ensure smooth and efficient system functionality."
+  },
+  {
+    "role": "Co-Founder",
+    "company": "Tech I Trick Web Development Team",
+    "location": "Rangpur, Bangladesh",
+    "years": "2022-2024",
+    "description": "As co-founder of Tech I Trick, I helped lead a team focused on developing modern web solutions. I was responsible for overseeing project development, ensuring high-quality output, and working with team members to build responsive and user-friendly web applications."
+  }
+]
