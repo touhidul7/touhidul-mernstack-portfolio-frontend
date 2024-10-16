@@ -2,8 +2,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Input from "../../Components/FormComponents/Input";
+import { ExternalLink } from "lucide-react";
 
 const InfoUpdate = () => {
+  const serverapi = import.meta.env.VITE_SERVER_API;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,7 +33,7 @@ const InfoUpdate = () => {
   useEffect(() => {
     const fetchInfo = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/info");
+        const response = await axios.get(serverapi);
         setInfo(response.data);
       } catch (error) {
         console.error("Error fetching info:", error);
@@ -39,7 +41,7 @@ const InfoUpdate = () => {
     };
 
     fetchInfo();
-  }, []);
+  }, [serverapi]);
 
   const handleSkillChange = (e, index) => {
     const newSkills = [...Skills];
@@ -82,7 +84,6 @@ const InfoUpdate = () => {
     setProjects(updatedProjects);
   };
 
-
   /* ========================== */
   const handleTechnologyChange = (e, projectIndex, techIndex) => {
     const updatedProjects = [...projects];
@@ -90,14 +91,12 @@ const InfoUpdate = () => {
     setProjects(updatedProjects);
   };
 
-  
-
   const addTechnology = (projectIndex) => {
     const updatedProjects = [...projects];
     updatedProjects[projectIndex].technologies.push("");
     setProjects(updatedProjects);
   };
-  
+
   /* ============================ */
 
   const addProject = () => {
@@ -112,9 +111,6 @@ const InfoUpdate = () => {
       },
     ]);
   };
-
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -132,10 +128,10 @@ const InfoUpdate = () => {
       };
 
       if (editingId) {
-        await axios.put(`http://localhost:5000/info/${editingId}`, newInfo);
+        await axios.put(`${serverapi}/${editingId}`, newInfo);
         setMessage("Information updated successfully!");
       } else {
-        await axios.post("http://localhost:5000/info", newInfo);
+        await axios.post(serverapi, newInfo);
         setMessage("Information added successfully!");
       }
 
@@ -167,7 +163,7 @@ const InfoUpdate = () => {
       ]);
       setEditingId(null);
 
-      const updatedInfo = await axios.get("http://localhost:5000/info");
+      const updatedInfo = await axios.get(serverapi);
       setInfo(updatedInfo.data);
     } catch (error) {
       setMessage("Error updating information. Please try again.");
@@ -212,9 +208,9 @@ const InfoUpdate = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/info/${id}`);
+      await axios.delete(`${serverapi}/${id}`);
       setMessage("Information deleted successfully!");
-      const updatedInfo = await axios.get("http://localhost:5000/info");
+      const updatedInfo = await axios.get(serverapi);
       setInfo(updatedInfo.data);
     } catch (error) {
       setMessage("Error deleting information. Please try again.");
@@ -273,6 +269,7 @@ const InfoUpdate = () => {
             required={true}
           />
 
+          {/* Skills------------------ */}
           <div className="mt-4">
             <h3 className="font-semibold">Skills</h3>
             {Skills.map((skill, index) => (
@@ -288,12 +285,13 @@ const InfoUpdate = () => {
             <button
               type="button"
               onClick={addSkill}
-              className="btn btn-primary mt-2"
+              className="border-b border-blue-500 w-fit p-1 mt-2 font-semibold text-blue-500"
             >
               Add Skill
             </button>
           </div>
 
+          {/* Experience----------- */}
           <div className="mt-4">
             <h3 className="font-semibold">Experience</h3>
             {experience.map((exp, index) => (
@@ -347,12 +345,13 @@ const InfoUpdate = () => {
             <button
               type="button"
               onClick={addExperience}
-              className="btn btn-primary mt-2"
+              className="border-b border-blue-500 w-fit p-1 mt-2 font-semibold text-blue-500"
             >
               Add Experience
             </button>
           </div>
 
+            {/* Projects-------------- */}
           <div className="mt-4">
             <h3 className="font-semibold">Projects</h3>
             {projects.map((project, projectIndex) => (
@@ -404,14 +403,18 @@ const InfoUpdate = () => {
                   <button
                     type="button"
                     onClick={() => addTechnology(projectIndex)}
-                    className="btn btn-primary mt-2"
+                    className="border-b border-blue-500 w-fit p-1 mt-2 font-semibold text-green-500 text-sm"
                   >
                     Add Technology
                   </button>
                 </div>
               </div>
             ))}
-            <button type="button" onClick={addProject} className="btn btn-primary mt-2">
+            <button
+              type="button"
+              onClick={addProject}
+              className="border-b border-blue-500 w-fit p-1 mt-2 font-semibold text-blue-500"
+            >
               Add Project
             </button>
           </div>
@@ -422,76 +425,171 @@ const InfoUpdate = () => {
         </form>
         {message && <p className="mt-4">{message}</p>}
 
-        <div className="mt-8">
+        {/*=================== display INFO===================== */}
+        <div className="mt-8 ">
           {info.map((infoItem) => (
-            <div key={infoItem._id} className="bg-gray-200 p-4 mb-4">
-              <h2>{infoItem.name}</h2>
-              <p>{infoItem.email}</p>
-              <p>{infoItem.phone}</p>
-              <p>{infoItem.JobTitle}</p>
-              <p>{infoItem.Description}</p>
-              <div>
-                <h3>Experience:</h3>
-                <ul>
-                  {infoItem.experience?.map((exp, index) => (
-                    <li key={index}>
-                      <p>Job Title: {exp.jobTitle}</p>
-                      <p>Job Range: {exp.range}</p>
-                      <p>Job Location: {exp.location}</p>
-                      <p>Company: {exp.companyName}</p>
-                      <p>Description: {exp.description}</p>
-                    </li>
-                  ))}
-                </ul>
+            <div
+              key={infoItem._id}
+              className="bg-gray-200 p-4 mb-4 flex flex-col gap-6 pb-10"
+            >
+              {/* =============Info edit and delete button================= */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => handleEdit(infoItem)}
+                  className="btn btn-accent"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(infoItem._id)}
+                  className="btn btn-error"
+                >
+                  Delete
+                </button>
               </div>
-              <div>
-                <h3>Projects:</h3>
-                <ul>
-                  {infoItem.projects?.map((project, index) => (
-                    <li key={index}>
-                      <p>Project Name: {project.projectName}</p>
-                      <p>Description: {project.description}</p>
-                      {project.imageLink && (
-                        <img
-                          src={project.imageLink}
-                          alt={`${project.projectName} image`}
-                          className="mt-2"
-                        />
-                      )}
-                      {project.projectURL && (
-                        <a
-                          href={project.projectURL}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-500"
-                        >
-                          Visit Project
-                        </a>
-                      )}
-                      <div>
-                        <h3>Technologies Used:</h3>
-                        <ul>
-                          {project.technologies.map((tech, techIndex) => (
-                            <li key={techIndex}>{tech}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+              <div className="border border-gray-900 bg-white p-4">
+                <h2>
+                  {" "}
+                  <b>ID: </b>
+                  {infoItem._id}
+                </h2>
+                <strong className="text-md">{infoItem.name}</strong>
+                <br />
+                <span className="">
+                  <b>Title: </b>
+                  {infoItem.JobTitle}
+                </span>
+                <br />
+                <span className="">
+                  <b>Email: </b>
+                  {infoItem.email}
+                </span>
+                <br />
+                <span className="">
+                  <b>Phone: </b>
+                  {infoItem.phone}
+                </span>
+                <br />
+                <b>Description:</b>
+                <p className="text-sm mt-1">{infoItem.Description}</p>
               </div>
-              <button
-                onClick={() => handleEdit(infoItem)}
-                className="btn btn-secondary"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(infoItem._id)}
-                className="btn btn-danger"
-              >
-                Delete
-              </button>
+
+              {/* ============Dsplay Skills============= */}
+              <div className="p-4 bg-gray-300 rounded-md">
+                <h3 className="text-xl font-bold">Skills:</h3>
+                {infoItem.Skills.length > 0 ? (
+                  <ul className="space-y-4 mt-4">
+                    {infoItem.Skills?.map((Skills, techIndex) => (
+                      <li
+                        key={techIndex}
+                        className="px-4 py-2 bg-white rounded shadow"
+                      >
+                        <div className="flex justify-between items-center">
+                          <strong className="text-md">{Skills}</strong>
+                          <div className=" flex flex-col items-start gap-2">
+                            <button className="px-3 py-1 bg-red-500 rounded text-white hover:bg-red-600 mt-2">
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-4 text-gray-600">No experiences found.</p>
+                )}
+              </div>
+
+              {/*  */}
+
+              {/*=================== display Experience===================== */}
+              <div className="p-4 bg-gray-300 rounded-md">
+                <h3 className="text-xl font-bold">Experience:</h3>
+                {infoItem.experience.length > 0 ? (
+                  <ul className="space-y-4 mt-4">
+                    {infoItem.experience?.map((exp, index) => (
+                      <li key={index} className="p-4 bg-white rounded shadow">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <strong className="text-md">{exp.jobTitle}</strong>{" "}
+                            at <span className="italic">{exp.companyName}</span>
+                            <p>
+                              <span className="italic">{exp.range} </span>in{" "}
+                              <span className="italic">{exp.location}</span>
+                            </p>
+                            <p className="text-sm mt-1">{exp.description}</p>
+                            <div className=" flex flex-col items-start gap-2">
+                              <button className="px-3 py-1 bg-red-500 rounded text-white hover:bg-red-600 mt-2">
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-4 text-gray-600">No experiences found.</p>
+                )}
+              </div>
+              {/*=================== display projects===================== */}
+
+              <div className="p-4 bg-gray-300 rounded-md">
+                <h3 className="text-xl font-bold">Projects:</h3>
+                {infoItem.projects?.length > 0 ? (
+                  <ul className="space-y-4 mt-4">
+                    {infoItem.projects?.map((project, index) => (
+                      <li key={index} className="p-4 bg-white rounded shadow">
+                        <div className="flex items-center gap-4">
+                          <img
+                            className="w-32"
+                            src={
+                              project.imageLink
+                                ? project.imageLink
+                                : "https://cdn-icons-png.flaticon.com/128/401/401061.png"
+                            }
+                            alt={`${project.projectName} image`}
+                          />
+                          <div>
+                            <strong className="text-md">
+                              {project.projectName}
+                            </strong>{" "}
+                            <p>
+                              <ul>
+                                {project.technologies.map((tech, techIndex) => (
+                                  <li key={techIndex}>{tech}</li>
+                                ))}
+                              </ul>
+                            </p>
+                            <p>
+                              <span className="italic text-green-400 font-medium">
+                                <a
+                                  className="flex items-center gap-1 hover:underline"
+                                  target="_blank"
+                                  href={project.projectURL}
+                                >
+                                  Preview Project
+                                  <ExternalLink size={15} />
+                                </a>
+                              </span>
+                            </p>
+                            <p className="text-sm mt-1">
+                              {project.description}
+                            </p>
+                            <div className=" flex flex-col items-start gap-2">
+                              <button className="px-3 py-1 bg-red-500 rounded text-white hover:bg-red-600 mt-2">
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-4 text-gray-600">No Projects found.</p>
+                )}
+              </div>
             </div>
           ))}
         </div>

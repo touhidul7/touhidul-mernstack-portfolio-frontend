@@ -10,24 +10,26 @@ const ProtectedRoutes = () => {
   const authUserName = import.meta.env.VITE_AUTH_USERNAME;
   const authPassword = import.meta.env.VITE_AUTH_PASSWORD;
 
-  // Check for stored user on mount
+/* ===================Store user on local storage======================= */
   useEffect(() => {
     try {
       const storedUser = localStorage.getItem("user");
       if (storedUser) {
-        setUser(JSON.parse(storedUser)); // Parse only if valid JSON
+        setUser(JSON.parse(storedUser)); 
       }
     } catch (error) {
       console.error("Failed to parse stored user data", error);
-      localStorage.removeItem("user"); // Clear invalid data
+      localStorage.removeItem("user"); 
     }
   }, []);
+
+  /* =====================Login Function==================== */
 
   function handleLogin({ username, password }) {
     if (username === authUserName && password === authPassword) {
       const userData = { username }; // Store user details as an object
       setUser(userData);
-      localStorage.setItem("user", JSON.stringify(userData)); // Save user data as JSON
+      localStorage.setItem("user", JSON.stringify(true)); // Save user data as JSON
       toast.success("Successfully Logged In!");
     } else {
       setUser(null);
@@ -36,12 +38,15 @@ const ProtectedRoutes = () => {
     }
   }
 
+  /* =====================Logout Function======================== */
+
   function handleLogout() {
     setUser(null);
     localStorage.removeItem("user"); // Clear user data on logout
     toast.success("Successfully Logged Out");
   }
 
+  /* ===================Protected Routing=================== */
   return user ? (
     <AdminLaout user={user} logout={handleLogout} />
   ) : (

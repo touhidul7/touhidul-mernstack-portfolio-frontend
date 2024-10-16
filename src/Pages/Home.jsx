@@ -7,24 +7,25 @@ import axios from 'axios';
 import Loader from '../Components/CommonComponents/Loader';
 
 const Home = () => {
+  const serverapi = import.meta.env.VITE_SERVER_API;
   const[info, setInfo]=useState([]);
   const[loading, setLoading]=useState(true);
   
   useEffect(() => {
     const fetchInfo = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/info"); // Use correct endpoint
+        const response = await axios.get(serverapi);
         setInfo(response.data[0]);
         setLoading(false);
         console.log(response.data[0])
       } catch (error) {
-        // setLoading(false);
+        setLoading(false);
         console.error("Error fetching info:", error);
       }
     };
 
     fetchInfo();
-  }, []);
+  }, [serverapi]);
 
 
 

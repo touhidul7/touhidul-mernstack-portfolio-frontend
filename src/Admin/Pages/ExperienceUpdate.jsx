@@ -41,18 +41,6 @@ const ExperienceUpdate = () => {
     }
   };
 
-  const handleDeleteExperience = async (index) => {
-    try {
-      const updatedExperience = experience.filter((_, i) => i !== index);
-      await axios.put(`http://localhost:5000/info/0`, { experience: updatedExperience });
-      setMessage("Experience deleted successfully.");
-      fetchInfo();
-    } catch (error) {
-      console.log("Error deleting experience.", error);
-      setMessage("Error deleting experience.");
-    }
-  };
-
   const handleEditExperience = async (e) => {
     e.preventDefault();
     const updatedExp = { jobTitle, companyName, description };
@@ -76,13 +64,7 @@ const ExperienceUpdate = () => {
     setDescription("");
   };
 
-  const handleEditClick = (exp, index) => {
-    setEditIndex(index);
-    setJobTitle(exp.jobTitle);
-    setCompanyName(exp.companyName);
-    setDescription(exp.description);
-  };
-
+  
   if (loading) return <p>Loading...</p>;
 
   return (
@@ -159,13 +141,11 @@ const ExperienceUpdate = () => {
                 </div>
                 <div className="space-x-2">
                   <button
-                    onClick={() => handleEditClick(exp, index)}
                     className="px-3 py-1 bg-yellow-400 rounded text-white hover:bg-yellow-500"
                   >
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDeleteExperience(index)}
                     className="px-3 py-1 bg-red-500 rounded text-white hover:bg-red-600"
                   >
                     Delete
