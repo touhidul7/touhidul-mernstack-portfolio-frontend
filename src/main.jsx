@@ -11,7 +11,8 @@ import MainLayout from "./Components/Layout/MainLayout";
 import InfoUpdate from "./Admin/Pages/InfoUpdate";
 import ProjectUpdate from "./Admin/Pages/ProjectUpdate";
 import ExperienceUpdate from "./Admin/Pages/ExperienceUpdate";
-// import Login from './Pages/Login'; // Uncomment this when you create the Login component
+
+/* VITE_SERVER_API=https://mernstackportfoliobackend-teds3zq3.b4a.run/info */
 
 const router = createBrowserRouter([
   {

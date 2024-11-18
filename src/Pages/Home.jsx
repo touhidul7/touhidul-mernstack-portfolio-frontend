@@ -10,7 +10,6 @@ const Home = () => {
   const serverapi = import.meta.env.VITE_SERVER_API;
   const[info, setInfo]=useState([]);
   const[loading, setLoading]=useState(true);
-  
   useEffect(() => {
     const fetchInfo = async () => {
       try {
@@ -27,6 +26,7 @@ const Home = () => {
     fetchInfo();
   }, [serverapi]);
 
+  console.log(info);
 
 
   return (

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Input from "../../Components/FormComponents/Input";
@@ -9,11 +8,21 @@ const InfoUpdate = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  /* Links:  fiverr, facebook, twitter, instagram, medium, quora, pinterest, github, linkedin*/
+  // const [fiverr, setFiverr] = useState("");
+  // const [facebook, setFacebook] = useState("");
+  // const [twitter, setTwitter] = useState("");
+  // const [instagram, setInstagram] = useState("");
+  // const [medium, setMedium] = useState("");
+  // const [quora, setQuora] = useState("");
+  // const [pinterest, setPinterest] = useState("");
+  // const [github, setGithub] = useState("");
+  // const [linkedin, setLinkedin] = useState("");
+  /* liks end */
   const [Description, setDescription] = useState("");
   const [phone, setPhone] = useState("");
   const [JobTitle, setJobTitle] = useState("");
   const [Skills, setSkills] = useState([]);
-  const [Links, setLinks] = useState({});
   const [experience, setExperience] = useState([
     { jobTitle: "", companyName: "", description: "", range: "", location: "" },
   ]);
@@ -51,10 +60,6 @@ const InfoUpdate = () => {
 
   const addSkill = () => {
     setSkills([...Skills, ""]);
-  };
-
-  const handleLinkChange = (e) => {
-    setLinks({ ...Links, [e.target.name]: e.target.value });
   };
 
   const handleExperienceChange = (e, index) => {
@@ -118,11 +123,19 @@ const InfoUpdate = () => {
       const newInfo = {
         name: `${firstName} ${lastName}`,
         email,
+        // fiverr,
+        // facebook,
+        // twitter,
+        // instagram,
+        // medium,
+        // quora,
+        // pinterest,
+        // github,
+        // linkedin,
         phone,
         Description,
         JobTitle,
         Skills,
-        Links,
         experience,
         projects,
       };
@@ -138,11 +151,19 @@ const InfoUpdate = () => {
       setFirstName("");
       setLastName("");
       setEmail("");
+      // setFiverr("");
+      // setFacebook("");
+      // setTwitter("");
+      // setInstagram("");
+      // setMedium("");
+      // setQuora("");
+      // setPinterest("");
+      // setGithub("");
+      // setLinkedin("");
       setDescription("");
       setPhone("");
       setJobTitle("");
       setSkills([]);
-      setLinks({});
       setExperience([
         {
           range: "",
@@ -179,8 +200,16 @@ const InfoUpdate = () => {
     setPhone(infoItem.phone);
     setJobTitle(infoItem.JobTitle);
     setEmail(infoItem.email);
+    // setFiverr(infoItem.Fiverr);
+    // setFacebook(infoItem.Facebook);
+    // setTwitter(infoItem.Twitter);
+    // setInstagram(infoItem.Instagram);
+    // setMedium(infoItem.Medium);
+    // setQuora(infoItem.Quora);
+    // setPinterest(infoItem.Pinterest);
+    // setGithub(infoItem.Github);
+    // setLinkedin(infoItem.Linkedin);
     setSkills(infoItem.Skills || []);
-    setLinks(infoItem.Links || {});
     setExperience(
       infoItem.experience || [
         {
@@ -221,7 +250,83 @@ const InfoUpdate = () => {
   return (
     <>
       <div className="pt-14 bg-white dark:bg-gray-900">
-        <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
+        <form className=" mx-auto" onSubmit={handleSubmit}>
+          {/* Links------------------- */}
+          {/* <div className="links">
+            <Input
+              onChange={(e) => setFiverr(e.target.value)}
+              value={fiverr}
+              type="text"
+              name="fiverr"
+              label="Fiverr"
+              required={false}
+            />
+            <Input
+              onChange={(e) => setFacebook(e.target.value)}
+              value={facebook}
+              type="text"
+              name="facebook"
+              label="Facebook"
+              required={false}
+            />
+            <Input
+              onChange={(e) => setTwitter(e.target.value)}
+              value={twitter}
+              type="text"
+              name="twitter"
+              label="Twitter"
+              required={false}
+            />
+            <Input
+              onChange={(e) => setInstagram(e.target.value)}
+              value={instagram}
+              type="text"
+              name="instagram"
+              label="Instagram"
+              required={false}
+            />
+            <Input
+              onChange={(e) => setMedium(e.target.value)}
+              value={medium}
+              type="text"
+              name="medium"
+              label="Medium"
+              required={false}
+            />
+            <Input
+              onChange={(e) => setQuora(e.target.value)}
+              value={quora}
+              type="text"
+              name="quora"
+              label="Quora"
+              required={false}
+            />
+            <Input
+              onChange={(e) => setPinterest(e.target.value)}
+              value={pinterest}
+              type="text"
+              name="pinterest"
+              label="Pinterest"
+              required={false}
+            />
+            <Input
+              onChange={(e) => setGithub(e.target.value)}
+              value={github}
+              type="text"
+              name="github"
+              label="Github"
+              required={false}
+            />
+            <Input
+              onChange={(e) => setLinkedin(e.target.value)}
+              value={linkedin}
+              type="text"
+              name="linkedin"
+              label="Linkedin"
+              required={false}
+            />
+          </div> */}
+
           <div className="grid md:grid-cols-2 md:gap-6">
             <Input
               onChange={(e) => setFirstName(e.target.value)}
@@ -351,7 +456,7 @@ const InfoUpdate = () => {
             </button>
           </div>
 
-            {/* Projects-------------- */}
+          {/* Projects-------------- */}
           <div className="mt-4">
             <h3 className="font-semibold">Projects</h3>
             {projects.map((project, projectIndex) => (
